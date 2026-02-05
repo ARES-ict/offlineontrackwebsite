@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline On Track</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+/* ========== GLOBAL ========== */
+body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(180deg, #05010d, #020617);
+    color: #e5e7eb;
+    overflow-x: hidden;
+}
+.glow { text-shadow: 0 0 5px #38bdf8, 0 0 15px #6366f1; }
+
+/* ========== ANIMATION BACKGROUND ========== */
+.gadget-background {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+.gadget {
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0.9;
+    animation: floatGadget 12s infinite linear;
+    filter: drop-shadow(0 0 15px #38bdf8);
+    transition: transform 0.3s ease;
+}
+.gadget:nth-child(1){ left:5%; animation-delay:-8s; }
+.gadget:nth-child(2){ left:25%; animation-delay:-6s; }
+.gadget:nth-child(3){ left:45%; animation-delay:-4s; }
+.gadget:nth-child(4){ left:65%; animation-delay:-2s; }
+.gadget:nth-child(5){ left:85%; animation-delay:0s; }
+
+@keyframes floatGadget {
+    0% { transform: translateY(120vh) rotate(0deg); }
+    100% { transform: translateY(-20vh) rotate(360deg); }
+}
+
+/* ========== CONTENT ========== */
+header, section, footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* ========== HERO TITLE PAGE ========== */
+header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 20px;
+    border-bottom: 2px solid #38bdf8;
+    background: radial-gradient(circle at center, rgba(56,189,248,0.15), transparent 60%);
+}
+
+header h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: #38bdf8;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+header p {
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    max-width: 700px;
+    opacity: 0.9;
+}
+
+.scroll-hint {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* Start Experience Button */
+#startBtn {
+    margin-top: 30px;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    color: #05010d;
+    background-color: #38bdf8;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(56,189,248,0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#startBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(56,189,248,0.8);
+}
+
+/* ========== INTRO ========== */
+section.intro {
+    padding: 30px 5%;
+    background: rgba(2,6,23,0.9);
+    border-radius: 20px;
+    margin: 30px auto;
+    box-shadow: 0 0 30px rgba(56,189,248,0.25);
+}
+
+/* ========== EPISODE VIDEO ========== */
+section.episode {
+    background: rgba(2,6,23,0.95);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px auto;
+    box-shadow: 0 0 40px rgba(99,102,241,0.35);
+}
+.episode h2 { color: #a5b4fc; margin-bottom:10px; }
+.video-container {
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
+video {
+    width: 100%;
+    max-width: 700px;
+    border: 2px solid #38bdf8;
+    border-radius: 12px;
+}
+
+/* ========== FOOTER ========== */
+footer {
+    text-align:center;
+    padding:20px;
+    opacity:0.7;
+    font-size: 0.9rem;
+}
+
+/* ========== MOBILE ========== */
+@media (max-width: 768px) {
+    header { padding: 60px 15px; }
+    header h1 { font-size: clamp(2.5rem, 10vw, 4rem); }
+    #startBtn { padding: 12px 30px; font-size: 1rem; }
+    section.intro, section.episode { padding: 20px 5%; margin: 20px auto; }
+    .gadget { font-size: 3rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND GADGET ANIMATION -->
+<div class="gadget-background">
+    <div class="gadget">📱</div>
+    <div class="gadget">💻</div>
+    <div class="gadget">🎧</div>
+    <div class="gadget">⌚</div>
+    <div class="gadget">🎮</div>
+</div>
+
+<!-- HERO TITLE PAGE -->
+<header>
+    <h1 class="glow" id="heroTitle">Offline On Track</h1>
+    <p>Step into a space where technology and life find the perfect balance.</p>
+    <button id="startBtn">Start Experience</button>
+</header>
+
+<section class="intro" id="intro">
+    <h2 class="glow">Introduction: Screen Time & Gadgets</h2>
+    <p><strong>This is a <strong>student-created</strong> website that transforms research findings into relatable, real-life school scenarios. It explores the positive effects of limiting screen time on our overall well-being. By consciously reducing exposure to digital devices, we can improve focus, enhance sleep quality, boost mental clarity, and foster stronger interpersonal connections. This initiative demonstrates how balancing technology use allows us to reclaim time for personal growth, creativity, and healthier habits, proving that stepping away from screens can be just as engaging and rewarding as being online.</p>
+    <p>Offline On Track is a short animated series that guides viewers on how limiting screen time can improve focus, sleep, and overall well-being. Through relatable stories and practical tips, it helps you build healthier habits with technology. Check out the episodes below:</p>
+</section>
+
+<section class="episode">
+    <h2 class="glow">Episode 1: Sample Video</h2>
+    <p>This short episode introduces how screen time affects daily life and strategies to balance gadget usage.(sample vid lang po muna:>)</p>
+    <div class="video-container">
+        <video controls>
+            <source src="animated.mp4" type="video/mp4">
+        </video>
+    </div>
+    <p>Learn tips to unplug, focus, and enjoy technology responsibly.</p>
+</section>
+
+<footer>
+    © 2026 OFFLINE ON TRACK • ICT • Ares
+</footer>
+
+<!-- INTERACTIVE SCRIPT -->
+<script>
+const title = document.getElementById('heroTitle');
+const startBtn = document.getElementById('startBtn');
+const introSection = document.getElementById('intro');
+const gadgets = document.querySelectorAll('.gadget');
+
+// Desktop: mouse parallax
+if (window.innerWidth >= 768) {
+    document.addEventListener('mousemove', e => {
+        const x = (window.innerWidth/2 - e.clientX)/25;
+        const y = (window.innerHeight/2 - e.clientY)/25;
+        title.style.transform = `translate(${x}px, ${y}px)`;
+        title.style.textShadow =
+            `${-x}px ${-y}px 15px #38bdf8,
+             ${x}px ${y}px 30px #6366f1`;
+    });
+}
+
+// Mobile: device tilt for title
+if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', e => {
+        if (window.innerWidth >= 768) return;
+        const x = e.gamma / 5;
+        const y = e.beta / 5;
+        title.style.transform = `translate(${x}px, ${y}px)`;
+        title.style.textShadow =
+            `${-x}px ${-y}px 10px #38bdf8,
+             ${x}px ${y}px 20px #6366f1`;
+    });
+}
+
+// Mobile: touch movement for gadgets
+let lastTouchX = 0;
+let lastTouchY = 0;
+document.addEventListener('touchmove', e => {
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - lastTouchX;
+    const deltaY = touch.clientY - lastTouchY;
+    lastTouchX = touch.clientX;
+    lastTouchY = touch.clientY;
+
+    gadgets.forEach((g, i) => {
+        const moveX = (deltaX * (i+1) / 30);
+        const moveY = (deltaY * (i+1) / 30);
+        g.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        setTimeout(() => g.style.transform = '', 150);
+    });
+});
+
+// Mobile: tap to rotate gadgets
+gadgets.forEach(g => {
+    g.addEventListener('touchstart', () => {
+        g.style.transition = 'transform 0.5s ease';
+        g.style.transform = 'rotate(360deg) scale(1.2)';
+        setTimeout(() => {
+            g.style.transform = '';
+            g.style.transition = 'transform 0.3s ease';
+        }, 500);
+    });
+});
+
+// Scroll to intro on button click
+startBtn.addEventListener('click', () => {
+    introSection.scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+
+</body>
+</html>
