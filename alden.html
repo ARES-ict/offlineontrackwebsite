@@ -2,192 +2,279 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICT Click & Drop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Gamified Lesson Quizzes</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 body{
-  font-family:Poppins,sans-serif;
-  background:linear-gradient(135deg,#eef6ff,#dbeafe);
-  text-align:center;
   margin:0;
-  min-height:100vh;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(180deg,#f8fafc,#e0f2fe);
+  color:#1e293b;
   overflow-x:hidden;
 }
 
-h1{color:#1d4ed8;margin-top:30px}
-p{max-width:900px;margin:10px auto 20px}
+/* FLOATING ICONS */
+.gadget-background{position:fixed;inset:0;pointer-events:none;z-index:0}
+.gadget{position:absolute;font-size:2.4rem;opacity:.18;animation:float 22s linear infinite}
+@keyframes float{from{transform:translateX(-20vw)}to{transform:translateX(120vw)}}
 
-/* CONTAINERS */
-.container{
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  flex-wrap:wrap;
-  padding:10px;
-}
+header,section{position:relative;z-index:1}
 
-/* DROP BOX */
-.box{
-  background:white;
-  padding:12px;
-  border-radius:16px;
-  min-height:180px;
-  width:46%;
-  box-shadow:0 12px 25px rgba(0,0,0,.12);
+/* HOME SCREEN */
+header{
+  min-height:100vh;
   display:flex;
   flex-direction:column;
-  gap:4px;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+header h1{
+  font-size:clamp(2.2rem,7vw,3.4rem);
+  color:#1d4ed8;
+}
+header p{
+  font-size:1.1rem;
+  margin-bottom:24px;
 }
 
-.box h3{
-  margin:0 0 6px;
-  color:#2563eb;
-  font-size:1rem;
-}
-
-/* ITEMS (BIG BEFORE DROP) */
-.item{
-  padding:16px;
-  margin:8px;
-  background:#dbeafe;
-  border-radius:14px;
-  font-weight:700;
-  font-size:1rem;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
-  cursor:pointer;
-}
-
-.item.selected{
-  background:#3b82f6;
-  color:white;
-}
-
-/* VERY SMALL ITEMS INSIDE DROP BOX */
-.box .item{
-  margin:0;
-  padding:4px 6px;
-  font-size:0.65rem;
-  line-height:1;
-  border-radius:6px;
-  box-shadow:none;
-  background:#e5edff;
-}
-
-/* RESULT COLORS */
-.correct{background:#dcfce7;border:2px solid #22c55e}
-.wrongItem{background:#fee2e2;border:2px solid #ef4444}
-
-#scoreBox{display:none;font-size:1.2rem;font-weight:700;color:#1e40af}
-#msg{font-size:1.2rem;margin-top:20px;color:#15803d;font-weight:700}
-
+/* BUTTONS */
 button{
-  margin:20px;
-  padding:14px 30px;
-  border:none;
-  border-radius:14px;
+  width:100%;
+  max-width:320px;
+  padding:18px;
+  font-size:1.15rem;
+  font-weight:600;
   background:#3b82f6;
   color:white;
-  font-size:1rem;
+  border:none;
+  border-radius:16px;
   cursor:pointer;
+  margin:10px 0;
   box-shadow:0 6px 0 #1e40af;
 }
+button:active{
+  transform:translateY(2px);
+  box-shadow:0 4px 0 #1e40af;
+}
 
-/* MOBILE TWEAKS */
-@media(max-width:600px){
-  .box{width:100%}
-  .item{width:92%;margin:10px auto}
+/* QUIZ BOX */
+.quiz-box{
+  width:94%;
+  max-width:520px;
+  margin:20px auto;
+  background:white;
+  padding:22px;
+  border-radius:20px;
+  box-shadow:0 18px 35px rgba(0,0,0,.12);
+  display:none;
+}
+
+/* QUIZ CONTENT */
+.counter{
+  font-weight:600;
+  font-size:1rem;
+  margin-bottom:12px;
+  color:#2563eb;
+}
+.question{
+  font-size:1.35rem;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+/* OPTIONS */
+.options button{
+  width:100%;
+  padding:18px;
+  font-size:1.1rem;
+  margin:12px 0;
+  background:#eff6ff;
+  color:#1e293b;
+  border:2px solid #3b82f6;
+  border-radius:16px;
+}
+.options button:active{background:#dbeafe}
+
+/* FEEDBACK */
+.correct-glow{box-shadow:0 0 14px 4px #16a34a}
+.wrong-glow{box-shadow:0 0 14px 4px #dc2626}
+
+#feedback{
+  font-size:1.2rem;
+  font-weight:700;
+  margin-top:12px;
+}
+.explanation{
+  font-size:1rem;
+  margin-top:10px;
+}
+
+/* CONTROLS */
+.controls{
+  margin-top:22px;
+  display:flex;
+  gap:12px;
+  flex-direction:column;
+}
+
+/* RESULT */
+.result{text-align:center}
+.result h2{
+  font-size:2.3rem;
+  color:#1d4ed8;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:18px;
+  font-size:.9rem;
+  color:#475569;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Click & Drop ICT</h1>
-<p>📘 Tap an item, then tap the correct category.</p>
-
-<p id="scoreBox">Score: <span id="score">0</span> / 20</p>
-
-<div class="container">
-  <div class="box" data-type="hardware"><h3>🖥️ Hardware</h3></div>
-  <div class="box" data-type="software"><h3>💾 Software</h3></div>
-  <div class="box" data-type="network"><h3>🌐 Network</h3></div>
-  <div class="box" data-type="storage"><h3>📂 Storage</h3></div>
+<div class="gadget-background">
+  <div class="gadget" style="top:10%">📚</div>
+  <div class="gadget" style="top:30%">💻</div>
+  <div class="gadget" style="top:50%">🧠</div>
+  <div class="gadget" style="top:70%">📱</div>
+  <div class="gadget" style="top:85%">💾</div>
 </div>
 
-<div class="container">
-  <div class="item" data-type="network">📶 Wi-Fi</div>
-  <div class="item" data-type="storage">⚡ SSD</div>
-  <div class="item" data-type="storage">💾 Flash Drive</div>
-  <div class="item" data-type="network">🔀 Switch</div>
-  <div class="item" data-type="hardware">🧠 CPU</div>
-  <div class="item" data-type="software">🪟 Windows</div>
-  <div class="item" data-type="software">📄 MS Word</div>
-  <div class="item" data-type="software">📊 Excel</div>
-  <div class="item" data-type="network">📡 Router</div>
-  <div class="item" data-type="hardware">🖥️ Monitor</div>
-  <div class="item" data-type="network">🌐 Modem</div>
-  <div class="item" data-type="storage">📀 Memory Card</div>
-  <div class="item" data-type="software">🌍 Chrome</div>
-  <div class="item" data-type="hardware">🖱️ Mouse</div>
-  <div class="item" data-type="hardware">🖨️ Printer</div>
-  <div class="item" data-type="software">📽️ PowerPoint</div>
-  <div class="item" data-type="network">🔗 LAN</div>
-  <div class="item" data-type="storage">💽 Hard Drive</div>
-  <div class="item" data-type="storage">☁️ Cloud Storage</div>
-  <div class="item" data-type="hardware">⌨️ Keyboard</div>
-</div>
+<header id="difficultyScreen">
+  <h1>Gamified Lesson Quizzes</h1>
+  <p>Select Difficulty</p>
+  <button data-level="easy">Easy</button>
+  <button data-level="medium">Medium</button>
+  <button data-level="hard">Hard</button>
+</header>
 
-<p id="msg"></p>
-<button onclick="location.reload()">Restart Game</button>
+<section class="quiz-box" id="quizBox">
+  <div class="counter" id="counter"></div>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div id="feedback"></div>
+  <div class="explanation" id="explanation"></div>
+  <div class="controls">
+    <button id="backBtn">Back</button>
+    <button id="restartBtn">Restart</button>
+  </div>
+</section>
+
+<section class="quiz-box result" id="resultBox">
+  <h2>Quiz Complete 🎉</h2>
+  <p>Your Score: <span id="score"></span></p>
+  <button id="restartAllBtn">Back to Difficulty</button>
+</section>
+
+<footer>© 2026 • Gamified Learning • ICT</footer>
 
 <script>
-let selectedItem=null;
-let placed=0, correct=0;
+const questions = [
+  /* EASY */
+  {q:"What does ICT stand for?", o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"], a:0, l:"easy", e:"ICT combines computing and communications."},
+  {q:"Which is an input device?", o:["Monitor","Keyboard","Printer","Speaker"], a:1, l:"easy", e:"Keyboard is used to input data."},
+  {q:"Which device shows output?", o:["CPU","Keyboard","Monitor","Mouse"], a:2, l:"easy", e:"Monitors display output."},
+  {q:"Which is hardware?", o:["Windows","Mouse","Google","Word"], a:1, l:"easy", e:"Hardware is the physical components."},
+  {q:"Which is software?", o:["Keyboard","Monitor","MS Word","CPU"], a:2, l:"easy", e:"Software refers to programs."},
 
-document.querySelectorAll('.item').forEach(item=>{
-  item.addEventListener('click',()=>{
-    if(item.dataset.done) return;
-    document.querySelectorAll('.item').forEach(i=>i.classList.remove('selected'));
-    selectedItem=item;
-    item.classList.add('selected');
-  });
+  /* MEDIUM */
+  {q:"What is RAM?", o:["Permanent storage","Temporary memory","CPU","Output"], a:1, l:"medium", e:"RAM stores data temporarily for active processes."},
+  {q:"What is phishing?", o:["Email scam","Virus","Backup","Firewall"], a:0, l:"medium", e:"Phishing is a type of online scam."},
+  {q:"Which edits images?", o:["Word","Excel","Photoshop","Notepad"], a:2, l:"medium", e:"Photoshop edits images."},
+  {q:"Which is cloud storage?", o:["Flash Drive","RAM","Google Drive","CPU"], a:2, l:"medium", e:"Google Drive stores files online."},
+  {q:"Which is spreadsheet software?", o:["Word","Excel","PowerPoint","Paint"], a:1, l:"medium", e:"Excel is spreadsheet software."},
+
+  /* HARD */
+  {q:"What is firewall?", o:["Virus","Security system","Browser","OS"], a:1, l:"hard", e:"Firewalls protect networks."},
+  {q:"What is encryption?", o:["Secure data","Delete data","Copy data","Share data"], a:0, l:"hard", e:"Encryption secures data."},
+  {q:"What does IP address identify?", o:["Device location","File type","Password","Website name"], a:0, l:"hard", e:"IP address identifies a device on a network."},
+  {q:"Which is open-source OS?", o:["Windows","Linux","macOS","iOS"], a:1, l:"hard", e:"Linux is open-source."},
+  {q:"What is bandwidth?", o:["Internet capacity","Storage","CPU speed","RAM"], a:0, l:"hard", e:"Bandwidth is the internet capacity."},
+  {q:"What does HTTP stand for?", o:["HyperText Transfer Protocol","High Tool Transfer Program","Host Text Program","Hyper Tool Text"], a:0, l:"hard", e:"HTTP is the protocol for web pages."},
+  {q:"What is cloud computing?", o:["Online services","Offline storage","Hardware repair","Local apps"], a:0, l:"hard", e:"Cloud computing uses remote servers."},
+  {q:"What is 2FA?", o:["Extra security","Backup","Encryption","Antivirus"], a:0, l:"hard", e:"2FA adds extra login security."},
+  {q:"Which is strong password?", o:["123456","password","P@ss2024!","abc"], a:2, l:"hard", e:"Strong passwords have letters, numbers, and symbols."},
+  {q:"What is ethical ICT use?", o:["Hacking","Piracy","Citing sources","Spamming"], a:2, l:"hard", e:"Citing sources is ethical."}
+];
+
+let filtered=[],index=0,score=0,currentLevel="",timer=15,timerInterval;
+const quizBox=document.getElementById("quizBox");
+const resultBox=document.getElementById("resultBox");
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const counterEl=document.getElementById("counter");
+const scoreEl=document.getElementById("score");
+const difficultyScreen=document.getElementById("difficultyScreen");
+const explanationEl=document.getElementById("explanation");
+const feedbackEl=document.getElementById("feedback");
+
+document.querySelectorAll("[data-level]").forEach(btn=>{
+  btn.onclick=()=>{
+    currentLevel=btn.dataset.level;
+    filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
+    index=score=0;
+    difficultyScreen.style.display="none";
+    quizBox.style.display="block";
+    loadQuestion();
+  };
 });
 
-document.querySelectorAll('.box').forEach(box=>{
-  box.addEventListener('click',()=>{
-    if(!selectedItem) return;
-
-    selectedItem.dataset.done="true";
-    box.appendChild(selectedItem);
-
-    if(selectedItem.dataset.type===box.dataset.type){
-      selectedItem.dataset.correct="true";
-    }
-
-    selectedItem.classList.remove('selected');
-    selectedItem=null;
-    placed++;
-
-    if(placed===20) reveal();
-  });
-});
-
-function reveal(){
-  document.getElementById("scoreBox").style.display="block";
-  document.querySelectorAll(".item").forEach(i=>{
-    if(i.dataset.correct==="true"){
-      i.classList.add("correct");
-      correct++;
-    } else {
-      i.classList.add("wrongItem");
-    }
-  });
-  document.getElementById("score").textContent=correct;
-  document.getElementById("msg").textContent="🎉 Results revealed! Review your answers.";
+function startTimer(){
+  timer=15;
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    timer--;
+    counterEl.textContent=`Question ${index+1} / ${filtered.length} • ${timer}s`;
+    if(timer<=0){clearInterval(timerInterval);answer(false,filtered[index].a);}
+  },1000);
 }
+
+function loadQuestion(){
+  const q=filtered[index];
+  feedbackEl.textContent="";
+  explanationEl.textContent="";
+  questionEl.textContent=q.q;
+  optionsEl.innerHTML="";
+  q.o.forEach((opt,i)=>{
+    const b=document.createElement("button");
+    b.textContent=opt;
+    b.onclick=()=>answer(i===q.a,q.a);
+    optionsEl.appendChild(b);
+  });
+  startTimer();
+}
+
+function answer(correct,correctIndex){
+  clearInterval(timerInterval);
+  [...optionsEl.children].forEach((b,i)=>{
+    b.disabled=true;
+    if(i===correctIndex)b.classList.add("correct-glow");
+    else if(!correct)b.classList.add("wrong-glow");
+  });
+  if(correct)score++;
+  feedbackEl.textContent=correct?"✅ Correct!":"❌ Wrong!";
+  explanationEl.textContent=filtered[index].e;
+  setTimeout(()=>{index++;index<filtered.length?loadQuestion():showResult()},2200);
+}
+
+function showResult(){
+  quizBox.style.display="none";
+  resultBox.style.display="block";
+  scoreEl.textContent=`${score} / ${filtered.length}`;
+}
+
+document.getElementById("backBtn").onclick=()=>{quizBox.style.display="none";difficultyScreen.style.display="flex";}
+document.getElementById("restartBtn").onclick=()=>{index=score=0;loadQuestion();}
+document.getElementById("restartAllBtn").onclick=()=>{resultBox.style.display="none";difficultyScreen.style.display="flex";}
 </script>
 
 </body>
