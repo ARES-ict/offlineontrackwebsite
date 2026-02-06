@@ -8,9 +8,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 :root{
   --radius:clamp(14px,2vw,20px);
@@ -29,7 +27,7 @@ body{
   color:#1e293b;
 }
 
-/* floating gadgets */
+/* floating background */
 .gadget-background{
   position:fixed;
   inset:0;
@@ -48,10 +46,7 @@ body{
   to{transform:translateX(130vw)}
 }
 
-header,section,footer{
-  position:relative;
-  z-index:1;
-}
+header,section,footer{position:relative;z-index:1}
 
 /* HEADER */
 header{
@@ -85,7 +80,6 @@ button{
   cursor:pointer;
   margin:10px 0;
   box-shadow:0 6px 0 #1e40af;
-  transition:.15s;
 }
 button:active{
   transform:translateY(2px);
@@ -106,10 +100,17 @@ button:active{
 
 .counter{
   font-weight:600;
-  margin-bottom:12px;
+  margin-bottom:8px;
   font-size:var(--text);
   color:#2563eb;
   text-align:center;
+}
+
+#attempts{
+  font-size:clamp(.9rem,3vw,1.05rem);
+  color:#475569;
+  text-align:center;
+  margin-bottom:16px;
 }
 
 .question{
@@ -124,9 +125,7 @@ button:active{
   color:#1e293b;
   border:2px solid #3b82f6;
 }
-.options button:active{
-  background:#dbeafe;
-}
+.options button:active{background:#dbeafe}
 
 .correct-glow{box-shadow:0 0 15px 5px #16a34a}
 .wrong-glow{box-shadow:0 0 15px 5px #dc2626}
@@ -151,15 +150,12 @@ button:active{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
+  justify-content:center;
 }
-.controls button{
-  flex:1;
-}
+.controls button{flex:0 0 240px}
 
 /* RESULT */
-.result{
-  text-align:center;
-}
+.result{text-align:center}
 .result h2{
   font-size:clamp(2rem,6vw,3.2rem);
   color:#1d4ed8;
@@ -173,49 +169,15 @@ footer{
   color:#475569;
 }
 
-/* DESKTOP LAYOUT ENHANCEMENT */
-@media(min-width:768px){
-  header button{
-    width:auto;
-    margin:10px;
-}
-/* DESKTOP BUTTON ALIGNMENT & PROPORTION */
-@media (min-width: 1024px) {
-
-  /* center difficulty buttons */
-  header {
-    align-items: center;
+@media(min-width:1024px){
+  .options{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
   }
-
-  header button {
-    width: 220px;
-    margin: 12px;
-  }
-
-  /* center option buttons */
-  .options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .options button {
-    width: 80%;
-    max-width: 520px;
-  }
-
-  /* center control buttons */
-  .controls {
-    justify-content: center;
-  }
-
-  .controls button {
-    flex: 0 0 240px;
-  }
-
-  /* result screen button */
-  #restartAllBtn {
-    width: 240px;
+  .options button{
+    width:80%;
+    max-width:520px;
   }
 }
 </style>
@@ -224,22 +186,14 @@ footer{
 <body>
 
 <div class="gadget-background">
-  <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
-  <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
-  <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
-  <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
-  <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
-  <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
-  <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
-  <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
-  <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
-  <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
-  <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
-  <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
-  <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
-  <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
-  <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
-  <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
+  <div class="gadget" style="top:5%">📚</div>
+  <div class="gadget" style="top:15%">💻</div>
+  <div class="gadget" style="top:25%">🧠</div>
+  <div class="gadget" style="top:35%">🎓</div>
+  <div class="gadget" style="top:45%">📱</div>
+  <div class="gadget" style="top:55%">🖥️</div>
+  <div class="gadget" style="top:65%">🧮</div>
+  <div class="gadget" style="top:75%">📊</div>
 </div>
 
 <header id="difficultyScreen">
@@ -252,6 +206,7 @@ footer{
 
 <section class="quiz-box" id="quizBox">
   <div class="counter" id="counter"></div>
+  <div id="attempts"></div>
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
   <div id="feedback"></div>
@@ -265,6 +220,7 @@ footer{
 <section class="quiz-box result" id="resultBox">
   <h2>Quiz Complete 🎉</h2>
   <p>Your Score: <span id="score"></span></p>
+  <p id="finalAttempts"></p>
   <button id="restartAllBtn">Back to Difficulty</button>
 </section>
 
@@ -298,6 +254,7 @@ const questions = [
 ];
 
 let filtered=[],index=0,score=0,currentLevel="",timer=15,timerInterval;
+let attempts = 0;
 
 const quizBox=document.getElementById("quizBox"),
 resultBox=document.getElementById("resultBox"),
@@ -307,7 +264,13 @@ counterEl=document.getElementById("counter"),
 scoreEl=document.getElementById("score"),
 difficultyScreen=document.getElementById("difficultyScreen"),
 explanationEl=document.getElementById("explanation"),
-feedbackEl=document.getElementById("feedback");
+feedbackEl=document.getElementById("feedback"),
+attemptsEl=document.getElementById("attempts"),
+finalAttemptsEl=document.getElementById("finalAttempts");
+
+function updateAttempts(){
+  attemptsEl.textContent = `Restart Attempts: ${attempts}`;
+}
 
 document.querySelectorAll("[data-level]").forEach(btn=>{
   btn.onclick=()=>{
@@ -316,6 +279,7 @@ document.querySelectorAll("[data-level]").forEach(btn=>{
     index=score=0;
     difficultyScreen.style.display="none";
     quizBox.style.display="block";
+    updateAttempts();
     loadQuestion();
   };
 });
@@ -368,17 +332,24 @@ function showResult(){
   quizBox.style.display="none";
   resultBox.style.display="block";
   scoreEl.textContent=`${score} / ${filtered.length}`;
+  finalAttemptsEl.textContent = `Restart Attempts: ${attempts}`;
 }
 
 document.getElementById("backBtn").onclick=()=>{
+  attempts++;
+  updateAttempts();
   quizBox.style.display="none";
   difficultyScreen.style.display="flex";
 };
+
 document.getElementById("restartBtn").onclick=()=>{
+  attempts++;
   filtered=shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
   index=score=0;
+  updateAttempts();
   loadQuestion();
 };
+
 document.getElementById("restartAllBtn").onclick=()=>{
   resultBox.style.display="none";
   difficultyScreen.style.display="flex";
@@ -390,4 +361,3 @@ function shuffleArray(arr){
 </script>
 </body>
 </html>
-
