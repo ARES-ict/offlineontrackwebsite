@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mini Game Selector</title>
 
 <style>
@@ -41,22 +41,21 @@ body {
 }
 
 /* CONTENT */
-header, section {
+header {
   position: relative;
   z-index: 1;
-}
-
-/* HERO */
-header {
-  min-height: 100svh; /* mobile-safe viewport */
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 32px 16px;
+
+  /* PERFECT SIDE PROPORTIONS */
+  padding-block: 32px;
+  padding-inline: clamp(16px, 5vw, 32px);
 }
 
+/* HERO TEXT */
 header h1 {
   font-size: clamp(2.2rem, 7vw, 4rem);
   color: #1d4ed8;
@@ -66,18 +65,22 @@ header h1 {
 header p {
   font-size: 1rem;
   margin-bottom: 32px;
-  max-width: 90%;
+  max-width: 480px;
 }
 
-/* GAME GRID */
+/* GAME GRID WRAPPER */
 .games {
   width: 100%;
   max-width: 1000px;
-  margin: auto;
+
+  margin-inline: auto; /* TRUE CENTERING */
   display: grid;
+
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
-  padding: 0 8px;
+
+  /* EQUAL MOBILE MARGINS */
+  padding-inline: clamp(8px, 4vw, 16px);
 }
 
 /* GAME CARD */
@@ -88,6 +91,10 @@ header p {
   text-align: center;
   box-shadow: 0 16px 32px rgba(0,0,0,0.1);
   transition: transform 0.3s ease;
+
+  /* PREVENT EDGE STRETCH */
+  max-width: 420px;
+  margin-inline: auto;
 }
 
 .game-card:hover {
@@ -123,7 +130,6 @@ header p {
   text-decoration: none;
   border-radius: 12px;
   box-shadow: 0 6px 0 #1e40af;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .play-btn:active {
@@ -131,7 +137,7 @@ header p {
   box-shadow: 0 4px 0 #1e40af;
 }
 
-/* LOCKED STATE */
+/* LOCKED */
 .play-btn[href="#"] {
   background: #94a3b8;
   box-shadow: 0 6px 0 #64748b;
@@ -146,7 +152,7 @@ footer {
   color: #475569;
 }
 
-/* MOBILE OPTIMIZATION */
+/* MOBILE ONLY FIX */
 @media (max-width: 480px) {
   .games {
     grid-template-columns: 1fr;
@@ -173,7 +179,6 @@ footer {
   <div class="gadget" style="--i:8">📖</div>
 </div>
 
-<!-- HERO -->
 <header>
   <h1>Choose Your Mini Game 🎮</h1>
   <p>Pick a game, have fun, and learn smarter!</p>
