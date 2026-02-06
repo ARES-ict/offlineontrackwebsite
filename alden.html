@@ -17,76 +17,108 @@ body{
   overflow-x:hidden;
 }
 
-/* BACKGROUND */
-.gadget-background{position:fixed;inset:0;pointer-events:none;z-index:0}
-.gadget{position:absolute;font-size:3rem;opacity:.2;animation:float 20s linear infinite}
-@keyframes float{from{transform:translateX(-20vw)}to{transform:translateX(120vw)}}
+h1{color:#1d4ed8;margin-top:24px}
+p{margin:10px auto 16px;padding:0 16px}
 
-header,section{position:relative;z-index:1}
-
-h1{color:#1d4ed8;margin-top:30px}
-p{max-width:900px;margin:10px auto 20px}
-
+/* CONTAINERS */
 .container{
   display:flex;
+  gap:16px;
   justify-content:center;
-  gap:30px;
   flex-wrap:wrap;
+  padding:0 12px;
 }
 
-/* BOX */
-.box{
-  background:white;
-  padding:18px;
-  border-radius:16px;
-  min-height:220px;
-  width:240px;
-  box-shadow:0 12px 25px rgba(0,0,0,.12);
+/* DROP BOX ROW (MOBILE FIRST) */
+.container.box-row{
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  justify-content:flex-start;
+  padding-bottom:8px;
+  scroll-snap-type:x mandatory;
 }
-.box h3{margin-top:0;color:#2563eb}
-.box.active{
-  border:2px dashed #3b82f6;
-  background:#eff6ff;
+
+/* DROP BOX */
+.box{
+  flex:0 0 160px;
+  background:white;
+  padding:14px;
+  border-radius:16px;
+  min-height:140px;
+  box-shadow:0 10px 22px rgba(0,0,0,.12);
+  scroll-snap-align:center;
+  font-size:1rem;
+  font-weight:600;
 }
 
 /* ITEMS */
 .item{
-  padding:12px;
-  margin:6px;
+  width:100%;
+  max-width:340px;
+  padding:18px;
+  margin:10px auto;
   background:#dbeafe;
-  border-radius:10px;
-  font-weight:600;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  border-radius:14px;
+  font-weight:700;
+  font-size:1.1rem;
+  box-shadow:0 6px 14px rgba(0,0,0,.15);
   cursor:pointer;
 }
+
+/* SELECTED */
 .item.selected{
   background:#3b82f6;
   color:white;
+  transform:scale(1.02);
 }
 
 /* RESULTS */
 .correct{background:#dcfce7;border:2px solid #22c55e}
 .wrongItem{background:#fee2e2;border:2px solid #ef4444}
 
-#scoreBox{display:none;font-size:1.2rem;font-weight:700;color:#1e40af}
-#msg{font-size:1.3rem;margin-top:20px;color:#15803d;font-weight:700}
+#scoreBox{
+  display:none;
+  font-size:1.2rem;
+  font-weight:700;
+  color:#1e40af;
+}
+
+#msg{
+  font-size:1.2rem;
+  margin-top:16px;
+  color:#15803d;
+  font-weight:700;
+}
 
 button{
-  margin:25px;
-  padding:14px 30px;
+  width:90%;
+  max-width:360px;
+  margin:24px auto;
+  padding:16px;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   background:#3b82f6;
   color:white;
-  font-size:1rem;
+  font-size:1.1rem;
   cursor:pointer;
   box-shadow:0 6px 0 #1e40af;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-  .box{width:90%;min-height:180px}
-  .item{width:90%;margin:8px auto}
+/* DESKTOP ENHANCEMENT */
+@media(min-width:768px){
+  .container.box-row{
+    justify-content:center;
+    overflow-x:visible;
+  }
+
+  .box{
+    flex:0 0 220px;
+    min-height:200px;
+  }
+
+  .item{
+    max-width:260px;
+  }
 }
 </style>
 </head>
@@ -98,13 +130,15 @@ button{
 
 <p id="scoreBox">Score: <span id="score">0</span> / 20</p>
 
-<div class="container">
+<!-- DROP BOXES -->
+<div class="container box-row">
   <div class="box" data-type="hardware">🖥️ Hardware</div>
   <div class="box" data-type="software">💾 Software</div>
   <div class="box" data-type="network">🌐 Network</div>
   <div class="box" data-type="storage">📂 Storage</div>
 </div>
 
+<!-- ITEMS -->
 <div class="container">
   <div class="item" data-type="network">📶 Wi-Fi</div>
   <div class="item" data-type="storage">⚡ SSD</div>
