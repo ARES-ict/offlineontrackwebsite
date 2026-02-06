@@ -2,13 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gamified Lesson Quizzes</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+:root{
+  --radius:clamp(14px,2vw,20px);
+  --pad:clamp(16px,4vw,40px);
+  --btn-pad:clamp(14px,3vw,20px);
+  --btn-font:clamp(1rem,3.5vw,1.15rem);
+  --text:clamp(1rem,3.5vw,1.15rem);
+  --question:clamp(1.3rem,4.5vw,1.7rem);
+  --title:clamp(2.2rem,7vw,4.5rem);
+}
 
 body{
   margin:0;
@@ -17,7 +29,7 @@ body{
   color:#1e293b;
 }
 
-/* floating background */
+/* floating gadgets */
 .gadget-background{
   position:fixed;
   inset:0;
@@ -27,21 +39,24 @@ body{
 }
 .gadget{
   position:absolute;
-  font-size:3rem;
+  font-size:clamp(2rem,6vw,3.6rem);
   opacity:.2;
-  animation:float 20s linear infinite;
+  animation:float 24s linear infinite;
 }
 @keyframes float{
   from{transform:translateX(-30vw)}
   to{transform:translateX(130vw)}
 }
 
-header,section,footer{position:relative;z-index:1}
+header,section,footer{
+  position:relative;
+  z-index:1;
+}
 
-/* header */
+/* HEADER */
 header{
   min-height:100vh;
-  padding:20px;
+  padding:var(--pad);
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -49,41 +64,42 @@ header{
   text-align:center;
 }
 header h1{
-  font-size:clamp(2.2rem,8vw,4rem);
+  font-size:var(--title);
   color:#1d4ed8;
 }
 header p{
-  font-size:clamp(1rem,4vw,1.2rem);
+  font-size:var(--text);
   margin-bottom:24px;
 }
 
-/* buttons */
+/* BUTTONS */
 button{
   width:100%;
-  max-width:340px;
-  padding:18px;
-  font-size:1.1rem;
+  max-width:360px;
+  padding:var(--btn-pad);
+  font-size:var(--btn-font);
   background:#3b82f6;
   color:#fff;
   border:none;
-  border-radius:14px;
+  border-radius:var(--radius);
   cursor:pointer;
   margin:10px 0;
   box-shadow:0 6px 0 #1e40af;
+  transition:.15s;
 }
 button:active{
   transform:translateY(2px);
   box-shadow:0 4px 0 #1e40af;
 }
 
-/* quiz box */
+/* QUIZ BOX */
 .quiz-box{
   width:100%;
-  max-width:900px;
+  max-width:1000px;
   margin:20px auto;
   background:#fff;
-  padding:clamp(20px,5vw,40px);
-  border-radius:20px;
+  padding:var(--pad);
+  border-radius:var(--radius);
   box-shadow:0 20px 40px rgba(0,0,0,.1);
   display:none;
 }
@@ -91,65 +107,78 @@ button:active{
 .counter{
   font-weight:600;
   margin-bottom:12px;
-  font-size:1rem;
+  font-size:var(--text);
   color:#2563eb;
   text-align:center;
 }
 
 .question{
-  font-size:clamp(1.2rem,4.5vw,1.6rem);
-  margin-bottom:20px;
+  font-size:var(--question);
+  margin-bottom:22px;
   text-align:center;
 }
 
-/* options */
+/* OPTIONS */
 .options button{
   background:#eff6ff;
   color:#1e293b;
   border:2px solid #3b82f6;
-  font-size:1.05rem;
 }
-.options button:active{background:#dbeafe}
+.options button:active{
+  background:#dbeafe;
+}
 
 .correct-glow{box-shadow:0 0 15px 5px #16a34a}
 .wrong-glow{box-shadow:0 0 15px 5px #dc2626}
 
 #feedback{
   font-weight:700;
-  font-size:1.2rem;
-  margin-top:15px;
+  font-size:clamp(1.1rem,3.5vw,1.3rem);
+  margin-top:14px;
   text-align:center;
 }
 
 .explanation{
   margin-top:10px;
   font-style:italic;
+  font-size:var(--text);
   text-align:center;
 }
 
+/* CONTROLS */
 .controls{
-  margin-top:24px;
+  margin-top:26px;
   display:flex;
   gap:12px;
   flex-wrap:wrap;
 }
-.controls button{flex:1}
+.controls button{
+  flex:1;
+}
 
-.result{text-align:center}
+/* RESULT */
+.result{
+  text-align:center;
+}
 .result h2{
-  font-size:clamp(2rem,6vw,3rem);
+  font-size:clamp(2rem,6vw,3.2rem);
   color:#1d4ed8;
 }
 
+/* FOOTER */
 footer{
   text-align:center;
   padding:20px;
-  font-size:.9rem;
+  font-size:clamp(.85rem,2.5vw,.95rem);
   color:#475569;
 }
 
+/* DESKTOP LAYOUT ENHANCEMENT */
 @media(min-width:768px){
-  header button{width:auto;margin:10px}
+  header button{
+    width:auto;
+    margin:10px;
+  }
 }
 </style>
 </head>
@@ -157,22 +186,15 @@ footer{
 <body>
 
 <div class="gadget-background">
-  <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
-  <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
-  <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
-  <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
-  <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
-  <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
-  <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
-  <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
-  <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
-  <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
-  <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
-  <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
-  <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
-  <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
-  <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
-  <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
+  <div class="gadget" style="top:5%">📚</div>
+  <div class="gadget" style="top:15%">💻</div>
+  <div class="gadget" style="top:25%">🧠</div>
+  <div class="gadget" style="top:35%">🎓</div>
+  <div class="gadget" style="top:45%">📱</div>
+  <div class="gadget" style="top:55%">🖥️</div>
+  <div class="gadget" style="top:65%">🧮</div>
+  <div class="gadget" style="top:75%">📊</div>
+  <div class="gadget" style="top:85%">🧑‍💻</div>
 </div>
 
 <header id="difficultyScreen">
@@ -204,12 +226,12 @@ footer{
 <footer>© 2026 • Gamified Learning • ICT</footer>
 
 <script>
-// QUESTIONS — NOT REMOVED
+// QUESTIONS — UNCHANGED
 const questions = [
   {q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy",e:"ICT combines computing and communications."},
   {q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy",e:"Keyboard is used to input data."},
   {q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy",e:"Monitors display output."},
-  {q:"Which is hardware?",o:["Windows","Mouse","Google","Word"],a:1,l:"easy",e:"Hardware is the physical components."},
+  {q:"Which is hardware?",o:["Windows","Mouse","Google","Word"],a:1,l:"easy",e:"Hardware is physical components."},
   {q:"Which is software?",o:["Keyboard","Monitor","MS Word","CPU"],a:2,l:"easy",e:"Software refers to programs."},
 
   {q:"What is RAM?",o:["Permanent storage","Temporary memory","CPU","Output"],a:1,l:"medium",e:"RAM stores data temporarily."},
@@ -223,7 +245,7 @@ const questions = [
   {q:"What does IP address identify?",o:["Device location","File type","Password","Website name"],a:0,l:"hard",e:"IP identifies devices."},
   {q:"Which is open-source OS?",o:["Windows","Linux","macOS","iOS"],a:1,l:"hard",e:"Linux is open-source."},
   {q:"What is bandwidth?",o:["Internet capacity","Storage","CPU speed","RAM"],a:0,l:"hard",e:"Bandwidth is capacity."},
-  {q:"What does HTTP stand for?",o:["HyperText Transfer Protocol","High Tool Transfer Program","Host Text Program","Hyper Tool Text"],a:0,l:"hard",e:"HTTP is web protocol."},
+  {q:"What does HTTP stand for?",o:["HyperText Transfer Protocol","High Tool Transfer Program","Host Text Program","Hyper Tool Text"],a:0,l:"hard",e:"HTTP is a web protocol."},
   {q:"What is cloud computing?",o:["Online services","Offline storage","Hardware repair","Local apps"],a:0,l:"hard",e:"Uses remote servers."},
   {q:"What is 2FA?",o:["Extra security","Backup","Encryption","Antivirus"],a:0,l:"hard",e:"Adds extra security."},
   {q:"Which is strong password?",o:["123456","password","P@ss2024!","abc"],a:2,l:"hard",e:"Strong passwords use symbols."},
@@ -283,7 +305,7 @@ function loadQuestion(){
 
 function answerQuestion(correct,correctIndex,explanation){
   clearInterval(timerInterval);
-  Array.from(optionsEl.children).forEach((b,i)=>{
+  [...optionsEl.children].forEach((b,i)=>{
     b.disabled=true;
     if(i===correctIndex)b.classList.add("correct-glow");
     else if(!correct)b.classList.add("wrong-glow");
@@ -323,4 +345,3 @@ function shuffleArray(arr){
 </script>
 </body>
 </html>
-
