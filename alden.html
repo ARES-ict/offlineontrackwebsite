@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gamified Lesson Quizzes</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* GLOBAL */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #f8fafc, #e0f2fe);
+    color: #1e293b;
+    overflow-x: hidden;
+}
+
+/* FLOATING CLASSROOM EMOJIS */
+.gadget-background {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+.gadget {
+    position: absolute;
+    font-size: 3.5rem;
+    opacity: 0.25;
+    animation: spinSide 20s linear infinite;
+}
+.gadget:nth-child(1){ top:5%; animation-delay:0s; }
+.gadget:nth-child(2){ top:15%; animation-delay:-2s; }
+.gadget:nth-child(3){ top:25%; animation-delay:-4s; }
+.gadget:nth-child(4){ top:35%; animation-delay:-6s; }
+.gadget:nth-child(5){ top:45%; animation-delay:-8s; }
+.gadget:nth-child(6){ top:55%; animation-delay:-10s; }
+.gadget:nth-child(7){ top:65%; animation-delay:-12s; }
+.gadget:nth-child(8){ top:75%; animation-delay:-14s; }
+.gadget:nth-child(9){ top:85%; animation-delay:-16s; }
+.gadget:nth-child(10){ top:95%; animation-delay:-18s; }
+
+@keyframes spinSide {
+    0% { transform: translateX(-20vw) rotate(0deg); }
+    100% { transform: translateX(120vw) rotate(360deg); }
+}
+
+/* CONTENT LAYER */
+header, section {
+    position: relative;
+    z-index: 1;
+}
+
+/* HERO */
+header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+header h1 {
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: #1d4ed8;
+    margin-bottom: 20px;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+#startBtn {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #1e40af;
+}
+#startBtn:hover {
+    transform: translateY(2px);
+    box-shadow: 0 4px 0 #1e40af;
+}
+
+/* QUIZ CARD */
+.quiz-box {
+    max-width: 700px;
+    margin: 50px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    display: none;
+}
+
+.timer {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ef4444;
+    text-align: right;
+}
+
+.question {
+    font-size: 1.4rem;
+    margin: 20px 0;
+}
+
+.options button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 2px solid #3b82f6;
+    background: #eff6ff;
+    cursor: pointer;
+}
+.options button:hover {
+    background: #dbeafe;
+}
+
+/* RESULT */
+.result {
+    text-align: center;
+}
+.result h2 {
+    font-size: 2.5rem;
+    color: #1d4ed8;
+}
+.result p {
+    font-size: 1.2rem;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #475569;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND EMOJIS -->
+<div class="gadget-background">
+    <div class="gadget">📚</div>
+    <div class="gadget">✏️</div>
+    <div class="gadget">🧠</div>
+    <div class="gadget">📖</div>
+    <div class="gadget">🏫</div>
+    <div class="gadget">📝</div>
+    <div class="gadget">🎓</div>
+    <div class="gadget">📊</div>
+    <div class="gadget">📐</div>
+    <div class="gadget">🧮</div>
+</div>
+
+<!-- HERO -->
+<header>
+    <h1>Gamified Lesson Quizzes</h1>
+    <p>Answer fast, score high, and learn smarter!</p>
+    <button id="startBtn">Start Quiz</button>
+</header>
+
+<!-- QUIZ -->
+<section class="quiz-box" id="quizBox">
+    <div class="timer">Time: <span id="time">10</span>s</div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+</section>
+
+<!-- RESULT -->
+<section class="quiz-box result" id="resultBox">
+    <h2>Quiz Complete 🎉</h2>
+    <p>Your Score: <span id="score"></span></p>
+</section>
+
+<footer>
+    © 2026 • Gamified Learning • ICT • Ares
+</footer>
+
+<script>
+const questions = [
+    {
+        q: "Which device is mainly used for online learning?",
+        options: ["Calculator", "Laptop", "Radio", "Camera"],
+        answer: 1
+    },
+    {
+        q: "What helps improve focus while studying?",
+        options: ["Too much screen time", "Multitasking", "Limiting distractions", "Gaming"],
+        answer: 2
+    },
+    {
+        q: "Which is a healthy study habit?",
+        options: ["No breaks", "Late-night studying", "Regular breaks", "Studying while tired"],
+        answer: 2
+    }
+];
+
+let index = 0;
+let score = 0;
+let time = 10;
+let timer;
+
+const startBtn = document.getElementById("startBtn");
+const quizBox = document.getElementById("quizBox");
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const timeEl = document.getElementById("time");
+const resultBox = document.getElementById("resultBox");
+const scoreEl = document.getElementById("score");
+
+startBtn.onclick = () => {
+    window.scrollTo({ top: quizBox.offsetTop, behavior: "smooth" });
+    quizBox.style.display = "block";
+    startQuiz();
+};
+
+function startQuiz() {
+    loadQuestion();
+    startTimer();
+}
+
+function loadQuestion() {
+    clearInterval(timer);
+    time = 10;
+    timeEl.textContent = time;
+
+    const q = questions[index];
+    questionEl.textContent = q.q;
+    optionsEl.innerHTML = "";
+
+    q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => selectAnswer(i);
+        optionsEl.appendChild(btn);
+    });
+
+    startTimer();
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        time--;
+        timeEl.textContent = time;
+        if (time === 0) {
+            nextQuestion();
+        }
+    }, 1000);
+}
+
+function selectAnswer(i) {
+    if (i === questions[index].answer) score++;
+    nextQuestion();
+}
+
+function nextQuestion() {
+    clearInterval(timer);
+    index++;
+    if (index < questions.length) {
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+    scoreEl.textContent = `${score} / ${questions.length}`;
+}
+</script>
+
+</body>
+</html>
