@@ -29,7 +29,7 @@ p{margin:10px auto 16px;padding:0 16px}
   padding:0 12px;
 }
 
-/* DROP BOX ROW (MOBILE FIRST) */
+/* DROP BOX ROW */
 .container.box-row{
   flex-wrap:nowrap;
   overflow-x:auto;
@@ -42,16 +42,21 @@ p{margin:10px auto 16px;padding:0 16px}
 .box{
   flex:0 0 160px;
   background:white;
-  padding:14px;
+  padding:12px;
   border-radius:16px;
-  min-height:140px;
+  min-height:160px;
   box-shadow:0 10px 22px rgba(0,0,0,.12);
   scroll-snap-align:center;
-  font-size:1rem;
+
+  /* STACK ITEMS */
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:stretch;
   font-weight:600;
 }
 
-/* ITEMS */
+/* ITEMS (DEFAULT = BIG & CLICKABLE) */
 .item{
   width:100%;
   max-width:340px;
@@ -70,6 +75,15 @@ p{margin:10px auto 16px;padding:0 16px}
   background:#3b82f6;
   color:white;
   transform:scale(1.02);
+}
+
+/* WHEN INSIDE A BOX */
+.box .item{
+  margin:0;
+  padding:10px;
+  font-size:0.95rem;
+  border-radius:10px;
+  box-shadow:0 4px 8px rgba(0,0,0,.12);
 }
 
 /* RESULTS */
@@ -104,7 +118,7 @@ button{
   box-shadow:0 6px 0 #1e40af;
 }
 
-/* DESKTOP ENHANCEMENT */
+/* DESKTOP */
 @media(min-width:768px){
   .container.box-row{
     justify-content:center;
